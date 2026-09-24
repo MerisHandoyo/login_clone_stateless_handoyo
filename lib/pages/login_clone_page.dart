@@ -1,22 +1,13 @@
-import 'package:coba_flutter/components/custom_button_lanjut.dart';
-import 'package:coba_flutter/components/custom_button_email.dart';
-import 'package:coba_flutter/components/custom_button_google.dart';
-import 'package:coba_flutter/components/custom_button_tiktok.dart';
-import 'package:coba_flutter/components/custom_login_divider.dart';
-import 'package:coba_flutter/components/custom_login_title.dart';
-import 'package:coba_flutter/components/custom_login_topbar.dart';
-import 'package:coba_flutter/components/custom_text_agreement.dart';
-import 'package:coba_flutter/components/custom_text_register.dart';
-import 'package:coba_flutter/components/custom_textfield_clone.dart';
+import 'package:coba_flutter/components/custom_button.dart';
+import 'package:coba_flutter/components/custom_icon.dart';
+import 'package:coba_flutter/components/custom_text.dart';
 import 'package:flutter/material.dart';
 
-class LoginClonePage extends StatelessWidget {
-  const LoginClonePage({super.key});
+class loginClonePage extends StatelessWidget {
+  const loginClonePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // pindahkan login clone sebelumnya kesini
-    // buatlah menjadi reusable component setiap widget
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -24,24 +15,97 @@ class LoginClonePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              customLoginTopbar(),
-              customLoginTitle(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomIcon(icon: Icon(Icons.arrow_back)),
+                  CustomIcon(icon: Icon(Icons.help_outline)),
+                ],
+              ),
+              CustomText(
+                text: "Masuk ke Tokopedia",
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
               SizedBox(height: 20),
-              customTextfieldClone(),
+              TextField(
+                decoration: InputDecoration(
+                  hintText: "Contoh: 08123456789",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                  ),
+                  prefixIcon: Icon(Icons.phone_android),
+                ),
+              ),
               SizedBox(height: 20),
-              customButtonLanjut(),
+              SizedBox(
+                height: 50,
+                child: ElevatedButton(onPressed: () {}, child: Text("Lanjut")),
+              ),
               SizedBox(height: 20),
-              customLoginDivider(),
+              Row(
+                children: [
+                  Expanded(child: Divider()),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CustomText(
+                      text: "atau masuk dengan",
+                      fontSize: 12,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  Expanded(child: Divider()),
+                ],
+              ),
               SizedBox(height: 20),
-              customButtonGoogle(),
+              CustomButton(text: "Google", icon: Icons.g_mobiledata),
               SizedBox(height: 10),
-              customButtonEmail(),
+              CustomButton(text: "Email", icon: Icons.email_outlined),
               SizedBox(height: 10),
-              customButtonTiktok(),
+              CustomButton(text: "TikTok", icon: Icons.music_note),
               SizedBox(height: 10),
-              customTextAgreement(),
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(text: "Dengan masuk di sini, kamu menyetujui "),
+                    TextSpan(
+                      text: "Syarat & Ketentuan",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green,
+                      ),
+                    ),
+                    TextSpan(text: " serta "),
+                    TextSpan(
+                      text: "Kebijakan Privasi",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green,
+                      ),
+                    ),
+                    TextSpan(text: " Tokopedia"),
+                  ],
+                ),
+                textAlign: TextAlign.center,
+              ),
               Spacer(),
-              customTextRegister(),
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(text: "Belum punya akun? "),
+                    TextSpan(
+                      text: "Daftar sekarang",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green,
+                      ),
+                    ),
+                  ],
+                ),
+                textAlign: TextAlign.center,
+              ),
               SizedBox(height: 20),
             ],
           ),
