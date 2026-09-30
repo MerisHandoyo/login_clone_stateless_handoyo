@@ -2,6 +2,7 @@ import 'package:coba_flutter/kalkulator_page.dart';
 import 'package:coba_flutter/login_page.dart';
 import 'package:coba_flutter/pages/calculator_page.dart';
 import 'package:coba_flutter/pages/login_clone_page.dart';
+import 'package:coba_flutter/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:coba_flutter/login_clone.dart';
 import 'package:get/get.dart';
@@ -18,8 +19,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       //home: CalculatorPage(),
-      home: loginClonePage(),
-      
+      //home: loginClonePage(),
+      title: "My Learning App",
+      initialRoute: Routes.registration,
+      getPages: Routes.myPages,
       );
   }
 }
