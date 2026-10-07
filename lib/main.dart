@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       //home: CalculatorPage(),
       //home: loginClonePage(),
       title: "My Learning App",
-      initialRoute: Routes.registration,
+      initialRoute: Routes.list_makanan, // untuk dijalankan pertama kali
       getPages: Routes.myPages,
       );
   }
