@@ -1,140 +1,68 @@
-import 'package:coba_flutter/components/custom_text.dart';
-import 'package:coba_flutter/models/makanan_model.dart';
+import 'package:coba_flutter/controller/detail_makanan_controller.dart';
+import 'package:coba_flutter/controller/list_makanan_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DetailMakananPage extends StatelessWidget {
-  const DetailMakananPage({super.key});
+  DetailMakananPage({super.key});
+
+  final listController = Get.find<ListmakananController>();
+  final detailController = Get.put(DetailMakananController());
+
   @override
   Widget build(BuildContext context) {
-    final MakananModel makanan = Get.arguments;
+    final int index = Get.arguments;
+    final makanan = listController.listMakanan[index];
+    final detail = detailController.detailMakanan;
+
     return Scaffold(
-      appBar: AppBar(
-        title: CustomText(
-          text: makanan.namaMakanan,
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          color: Colors.black,
-        ),
-      ),
+      appBar: AppBar(title: Text(makanan.namaMakanan)),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.network(
-              makanan.gambar,
+              detail.gambar,
               width: double.infinity,
               height: 250,
               fit: BoxFit.cover,
             ),
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: CustomText(
-                          text: makanan.namaMakanan,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                      CustomText(
-                        text: makanan.hargaMakanan,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green,
-                      ),
-                    ],
+                  Text(
+                    makanan.namaMakanan,
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      const Icon(Icons.star, color: Colors.amber, size: 20),
-                      const SizedBox(width: 5),
-                      CustomText(
-                        text: "${makanan.rating}",
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                      const SizedBox(width: 8),
-                      CustomText(
-                        text: "${makanan.reviews.length} ulasan",
-                        fontSize: 14,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.grey,
-                      ),
-                    ],
+                  SizedBox(height: 8),
+                  Text(makanan.hargaMakanan, style: TextStyle(fontSize: 18)),
+                  SizedBox(height: 8),
+                  Text(
+                    "Rating: ${detail.rating}",
+                    style: TextStyle(fontSize: 16),
                   ),
-                  const SizedBox(height: 20),
-                  CustomText(
-                    text: "Deskripsi",
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                  SizedBox(height: 16),
+                  Text(detail.deskripsi, style: TextStyle(fontSize: 16)),
+                  SizedBox(height: 20),
+                  Text(
+                    "Review",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 8),
-                  CustomText(
-                    text: makanan.deskripsi,
-                    fontSize: 15,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.black,
-                  ),
-                  const SizedBox(height: 20),
-                  CustomText(
-                    text: "Ulasan",
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                  const SizedBox(height: 10),
-                  SizedBox(
-                    height: 250,
-                    child: ListView.builder(
-                      itemCount: makanan.reviews.length,
-                      itemBuilder: (context, index) {
-                        final review = makanan.reviews[index];
-                        return Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(12),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CustomText(
-                                  text: review.nama,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                                const SizedBox(height: 5),
-                                Row(
-                                  children: [
-                                    for (int i = 0; i < review.bintang; i++)
-                                      const Icon(
-                                        Icons.star,
-                                        color: Colors.amber,
-                                        size: 18,
-                                      ),
-                                  ],
-                                ),
-                                const SizedBox(height: 5),
-                                CustomText(
-                                  text: review.ulasan,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.black,
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+                  SizedBox(height: 10),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: detail.reviews.length,
+                    itemBuilder: (context, index) {
+                      final review = detail.reviews[index];
+                      return ListTile(
+                        title: Text(review.nama),
+                        subtitle: Text(review.ulasan),
+                        trailing: Text("${review.bintang} ⭐"),
+                      );
+                    },
                   ),
                 ],
               ),
