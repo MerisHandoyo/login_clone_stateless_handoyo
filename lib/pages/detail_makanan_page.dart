@@ -1,28 +1,24 @@
-import 'package:coba_flutter/controller/detail_makanan_controller.dart';
-import 'package:coba_flutter/controller/list_makanan_controller.dart';
+import 'package:coba_flutter/models/makanan_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DetailMakananPage extends StatelessWidget {
   DetailMakananPage({super.key});
 
-  final listController = Get.find<ListmakananController>();
-  final detailController = Get.put(DetailMakananController());
-
   @override
   Widget build(BuildContext context) {
-    final int index = Get.arguments;
-    final makanan = listController.listMakanan[index];
-    final detail = detailController.detailMakanan;
+    final MakananModel makanan = Get.arguments;
 
     return Scaffold(
-      appBar: AppBar(title: Text(makanan.namaMakanan)),
+      appBar: AppBar(
+        title: Text(makanan.namaMakanan),
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.network(
-              detail.gambar,
+              makanan.gambar,
               width: double.infinity,
               height: 250,
               fit: BoxFit.cover,
@@ -34,29 +30,42 @@ class DetailMakananPage extends StatelessWidget {
                 children: [
                   Text(
                     makanan.namaMakanan,
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   SizedBox(height: 8),
-                  Text(makanan.hargaMakanan, style: TextStyle(fontSize: 18)),
+                  Text(
+                    makanan.hargaMakanan,
+                    style: TextStyle(fontSize: 18),
+                  ),
                   SizedBox(height: 8),
                   Text(
-                    "Rating: ${detail.rating}",
+                    "Rating: ${makanan.rating}",
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(height: 16),
-                  Text(detail.deskripsi, style: TextStyle(fontSize: 16)),
+                  Text(
+                    makanan.deskripsi,
+                    style: TextStyle(fontSize: 16),
+                  ),
                   SizedBox(height: 20),
                   Text(
                     "Review",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   SizedBox(height: 10),
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: detail.reviews.length,
+                    itemCount: makanan.reviews.length,
                     itemBuilder: (context, index) {
-                      final review = detail.reviews[index];
+                      final review = makanan.reviews[index];
+
                       return ListTile(
                         title: Text(review.nama),
                         subtitle: Text(review.ulasan),
